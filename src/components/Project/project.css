@@ -1,0 +1,405 @@
+/* =========================================
+   PROJECTS CONTAINER LAYER CONFIG
+========================================= */
+.pro-section {
+    width: 100%;
+    background: #020205; 
+    position: relative;
+    z-index: 5; 
+    padding: 40px 4%;
+    scroll-margin-top: 100px;
+    user-select: none;
+}
+
+.pro-panel-container {
+    width: 100%;
+    max-width: 1340px;
+    margin: 0 auto;
+}
+
+.pro-title {
+    color: #9B5CFF;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 70px;
+}
+
+/* =========================================
+   CAROUSEL DECK PLATFORM STAGE
+========================================= */
+.projects-carousel-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+}
+
+.projects-deck-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+.projects-deck-track:active {
+    cursor: grabbing;
+}
+
+/* =========================================
+   BASE CAPSULE SPECIFICATION SETTINGS
+========================================= */
+.project-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(11, 12, 20, 0.98);
+    backdrop-filter: blur(40px); 
+    border: 1px solid rgba(155, 92, 255, 0.12); 
+    border-radius: 500px; 
+    box-sizing: border-box;
+    box-shadow: 0 45px 90px rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(0) scale(0.85);
+    z-index: 1;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease,
+                box-shadow 0.4s ease;
+}
+
+/* =========================================
+   3D CARD DECK POSITION STATES
+========================================= */
+.project-card.active-card {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+    z-index: 10;
+}
+
+.project-card.prev-card {
+    opacity: 0.5;
+    transform: translateY(-65px) scaleX(0.92) scaleY(0.2); 
+    z-index: 5;
+    background: #14141e !important;
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+}
+
+.project-card.next-card {
+    opacity: 0.5;
+    transform: translateY(65px) scaleX(0.92) scaleY(0.2); 
+    z-index: 5;
+    background: #14141e !important;
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+}
+
+.project-card.hidden-stack-card {
+    opacity: 0;
+    transform: translateY(0) scale(0.65);
+    z-index: 1;
+}
+
+/* =========================================
+   AMBUSH BACKDROP FLASHLIGHTS (Behind Elements Fix)
+========================================= */
+.flashlight-side-left, .flashlight-side-right {
+    position: absolute;
+    top: 0; 
+    bottom: 0; 
+    width: 350px; 
+    pointer-events: none; 
+    /* CRITICAL FIX: Sent to background layer level inside card container */
+    z-index: 1; 
+    opacity: 0; 
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.flashlight-side-left { 
+    left: 0; 
+    /* Super soft feather profile: shifts color slowly into absolute zero black transparency */
+background: radial-gradient(
+    circle at 0% 50%,
+    rgba(122, 77, 255, 0.311) 0%,
+    rgba(169, 92, 255, 0.10) 50%,
+    transparent 100%
+);}
+.flashlight-side-right { 
+    right: 0; 
+    background: radial-gradient(circle at 100% 50%, rgba(155, 92, 255, 0.22) 0%, rgba(34, 211, 238, 0.06) 45%, rgba(34, 211, 238, 0.01) 75%, transparent 100%); 
+}
+
+/* Fire hover lighting strictly on the active card */
+.project-card.active-card:hover {
+    border-color: rgba(34, 211, 238, 0.25);
+    box-shadow: 0 50px 100px rgba(155, 92, 255, 0.15), 0 0 50px rgba(34, 211, 238, 0.04);
+}
+.project-card.active-card:hover .flashlight-side-left,
+.project-card.active-card:hover .flashlight-side-right { 
+    opacity: 1; 
+}
+
+/* =========================================
+   INNER CONTENT PACKAGING LAYOUT
+========================================= */
+.card-content-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 50px;
+    padding: 24px 95px 24px 24px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    align-items: center;
+    /* CRITICAL FIX: Pushes text and imagery on top of the flashlights layer */
+    position: relative;
+    z-index: 2; 
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Hide background card contents */
+.project-card.prev-card .card-content-wrapper,
+.project-card.next-card .card-content-wrapper {
+    opacity: 0 !important;
+}
+
+/* === LEFT PANEL IMAGE PROFILE === */
+.card-left-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 250px 40px 40px 250px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #050508;
+    position: relative;
+}
+
+.project-main-photo {
+    width: 100%;
+    height: 100%;
+    /* Changed from 'cover' to 'contain' to show the full image without cropping */
+    object-fit: contain; 
+    display: block;
+    /* Keeps image content soft and dark unless active card is hovered */
+    filter: brightness(80%);
+    transition: filter 0.4s ease;
+}
+.project-card.active-card:hover .project-main-photo {
+    filter: brightness(100%);
+}
+
+/* === RIGHT PANEL DIM-TO-GLOW CONTENT CONTROLLERS === */
+/* Update this existing class */
+.card-right-info {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden; /* Ensures the parent doesn't scroll */
+    font-family: "Poppins", sans-serif;
+}
+
+/* Add this new class */
+.scrollable-text-content {
+    flex: 1;            /* Takes all available space above buttons */
+    overflow-y: auto;   /* Enables vertical scrolling */
+    padding-right: 10px; 
+    margin-bottom: 20px;
+}
+
+/* Optional: Custom scrollbar look */
+.scrollable-text-content::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollable-text-content::-webkit-scrollbar-thumb {
+    background: rgba(155, 92, 255, 0.3);
+    border-radius: 10px;
+}
+
+/* Base states are dark grey / muted */
+.project-badge-id {
+    color: #584b73; 
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+.project-title {
+    font-size: 34px;
+    color: #94a3b8; 
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+}
+.project-short-info {
+    color: #64748b; 
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 26px 0;
+    transition: color 0.3s ease;
+}
+.project-tools-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+    justify-content: flex-start; /* FIX: Keeps tags bound tightly to the left side */
+}
+.tool-tag {
+    background: rgba(34, 211, 238, 0.03);
+    border: 1px solid rgba(34, 211, 238, 0.12);
+    color: #475569; 
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* === BUTTON CONTAINER ALIGNMENT FIX === */
+.project-action-triggers {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* FIX: Forces buttons to stay beautifully left-aligned */
+    gap: 24px;                  /* FIX: Clean horizontal gap between the two buttons */
+    width: 100%;
+}
+
+.btn-view-project {
+    background: linear-gradient(135deg, #51379e, #633a9c); 
+    color: rgba(255, 255, 255, 0.7);
+    padding: 14px 28px;        /* Symmetrical spacing matching Screenshot 2026-07-04 at 12.07.21 AM.png */
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-github-link {
+    background: transparent;
+    border: 1px solid rgba(100, 116, 139, 0.4); /* Subtle muted gray border initially */
+    color: #64748b;                             /* Matching muted text */
+    padding: 13px 28px;                         /* Matches the exact height of View Project button */
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* === ACTIVATE HIGH-CONTRAST ILLUMINATION ON HOVER === */
+.project-card.active-card:hover .project-badge-id { color: #9B5CFF; }
+.project-card.active-card:hover .project-title { color: #ffffffcb; }
+.project-card.active-card:hover .project-short-info { color: #cbd5e1cd; }
+.project-card.active-card:hover .btn-github-link { color: #ffffffc9; }
+
+.project-card.active-card:hover .tool-tag {
+    background: rgba(34, 211, 238, 0.08);
+    border-color: rgba(34, 211, 238, 0.3);
+    color: #22d3eee5;
+}
+.project-card.active-card:hover .btn-view-project {
+    background: linear-gradient(135deg, #7a4dffed, #9b5cffe7);
+    color: #ffffffe1;
+    box-shadow: 0 4px 15px rgba(155, 92, 255, 0.25);
+}
+
+/* =========================================
+   VERTICAL BUTTON CONTROLS
+========================================= */
+.vertical-stack-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+.stack-nav-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid #334155; /* Dark control borders */
+    color: #475569;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.stack-nav-btn:hover {
+    background: #9B5CFF;
+    border-color: #9B5CFF;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* =========================================
+   RESPONSIVE LAYER BREAKPOINTS
+========================================= */
+@media (max-width: 1100px) {
+    .card-content-wrapper { padding: 24px 60px 24px 24px; gap: 30px; }
+}
+@media (max-width: 992px) {
+    .projects-carousel-stage { height: auto; display: block; }
+    .projects-deck-track { display: flex; flex-direction: column; gap: 24px; }
+    .project-card { position: relative !important; transform: none !important; opacity: 1 !important; background: #0c0d14 !important; border-radius: 30px; height: auto; }
+    .project-card.prev-card .card-content-wrapper, .project-card.next-card .card-content-wrapper { opacity: 1 !important; }
+    .card-content-wrapper { grid-template-columns: 1fr; padding: 30px; }
+    .card-left-photo { border-radius: 20px; height: 240px; }
+    .vertical-stack-controls { display: none !important; }
+    /* Revert text illumination states on smaller mobile layouts */
+    .project-badge-id { color: #9B5CFF; } .project-title { color: #ffffff; } .project-short-info { color: #cbd5e1; } .btn-github-link { color: #ffffff; }
+    .tool-tag { background: rgba(34, 211, 238, 0.08); border-color: rgba(34, 211, 238, 0.3); color: #22d3ee; }
+    .btn-view-project { background: linear-gradient(135deg, #7A4DFF, #9B5CFF); color: #ffffff; }
+    .project-main-photo { filter: none !important; }
+}
+
+/* ==========================================================================
+   SCROLL-IN ENTRANCE ANIMATIONS (PROJECTS VIEWPORT STAGING)
+   ========================================================================== */
+
+/* 1. Set the initial hidden staging properties for the header and card frame stage */
+.pro-title,
+.projects-carousel-stage {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                transform 1.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+/* 2. Active triggers: Animate up smoothly when the .pro-active container class is added */
+.pro-section.pro-active .pro-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s; /* Title surfaces first */
+}
+
+.pro-section.pro-active .projects-carousel-stage {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s; /* The interactive 3D deck sweeps up shortly after */
+}

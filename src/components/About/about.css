@@ -1,0 +1,485 @@
+/* =========================================
+   BASE LAYOUT CONFIG (FIXED OVERFLOW)
+========================================= */
+.about {
+    position: relative;
+    z-index: 5;          /* Elevated higher than Hero to cleanly layer over any bleeding elements */
+    background: #020205; /* Solid background color acts as an opaque shield */
+    
+    /* FIX: Changed from hidden to clip/visible so waves can slide out into the skills section below */
+    overflow: clip; 
+    
+    padding: 100px 6% 40px 6%; /* Reduced bottom padding slightly to close the gap */
+    color: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
+    scroll-margin-top: 30px;
+
+}
+
+/* =========================================
+   BACKGROUND WAVES FIX (NOW PASSING THROUGH)
+========================================= */
+.about-bg-waves {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 180%; /* Increased so it completely covers both About and Skills panels */
+    pointer-events: none;
+    z-index: 1;   /* Placed safely behind all texts and content cards */
+    opacity: 1.0;
+    overflow: visible;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-image: radial-gradient(circle at center, rgba(155, 92, 255, 0.06) 0%, transparent 65%),
+                      linear-gradient(rgba(155, 92, 255, 0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(155, 92, 255, 0.04) 1px, transparent 1px);
+    background-size: 100% 100%, 40px 40px, 40px 40px;
+    border-radius: 43%;
+    will-change: transform;          
+    transform: translate3d(0, 0, 0); 
+}
+
+.wave-1 { animation: moveWave 45s linear infinite; }
+.wave-2 { animation: moveWave 55s linear infinite; opacity: 0.5; border-radius: 40%; }
+.wave-3 { animation: moveWave 40s linear reverse infinite; opacity: 0.3; border-radius: 45%; }
+
+@keyframes moveWave {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* =========================================
+   CONTAINER CONFIG (GREEN BOX ALIGNMENT)
+========================================= */
+.about-container {
+    max-width: 1560px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.about-left {
+    flex: 1;             /* Increased from 0.8 to allow more space */
+    max-width: 540px;    /* Increased from 440px to upscale the layout */
+    width: 100%;
+    position: relative;
+}
+
+.about-illustration {
+    width: 100%;
+    height: 560px;       /* Increased height from 480px to match new width proportions */
+    border-radius: 20px;
+    background: transparent; /* Removed background card fill */
+    border: none;        /* REMOVED THE BORDER */
+    box-shadow: none;    /* Removed outer card shadow to cleanly float the particle image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-right {
+    flex: 1.2;
+    width: 100%;
+}
+
+.about-tag {
+    color: #9B5CFF;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.about-title {
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 800;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #ffffff 40%, #9B5CFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Paragraph Text Justification Alignment Fix */
+.about-description {
+    color: #64748b;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 720px;
+    margin-bottom: 40px;
+    text-align: justify; /* Aligns paragraph text perfectly from both sides */
+}
+
+/* =========================================
+   INFINITE SLIDING CAROUSEL SYSTEM
+========================================= */
+.about-cards-carousel {
+    width: 100%;
+    max-width: 720px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 40px;
+    padding: 15px 0;
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.about-cards-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: slideCards 25s linear infinite;
+}
+
+.about-cards-carousel:hover .about-cards-track {
+    animation-play-state: paused;
+}
+
+.about-mini-card {
+    width: 220px;
+    flex-shrink: 0;
+    padding: 22px;
+    border-radius: 14px;
+    /* Slightly increased opacity to keep a dark premium look without needing blur */
+    background: rgba(13, 16, 24, 0.85); 
+    border: 1px solid rgba(155, 92, 255, 0.12);
+    
+    /* PERFORMANCE OPTIMIZATIONS */
+    /* 1. Removed backdrop-filter: blur(12px); to completely fix scroll lag */
+    /* 2. Changed 'all' to target only 'transform' to avoid triggering layout repaints */
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    
+    will-change: transform;          /* Hints to the browser to prepare a graphics layer */
+    transform: translate3d(0, 0, 0); /* Forces the GPU to handle the slider animation frames smoothly */
+}
+.about-mini-card h3 {
+    color: #94a3b8; 
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+}
+
+.about-mini-card p {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.about-card-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(155, 92, 255, 0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9B5CFF;
+    margin-bottom: 14px;
+    transition: all 0.3s ease;
+}
+
+.about-card-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.about-mini-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(155, 92, 255, 0.5);
+    background: rgba(20, 16, 36, 0.7);
+    box-shadow: 0 15px 30px rgba(155, 92, 255, 0.2);
+}
+
+.about-mini-card:hover h3 { color: #ffffff; }
+.about-mini-card:hover p { color: #cbd5e1; }
+.about-mini-card:hover .about-card-icon {
+    background: #9B5CFF;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(155, 92, 255, 0.4);
+}
+
+@keyframes slideCards {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 10px)); }
+}
+
+/* =========================================
+   HORIZONTAL TIMELINE SYSTEM (RED BOX ABSOLUTE POSITIONING FIX)
+========================================= */
+.about-horizontal-timeline-wrapper {
+    margin-top: 40px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+}
+
+.timeline-section-title {
+    color: #9B5CFF;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 20px; /* Space buffer dynamically housing the top contents */
+    text-align: center;
+}
+
+.timeline-section-subtitle {
+    color: #64748b;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 180px; /* This now creates the healthy buffer zone above the dots */
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.horizontal-timeline-container {
+    position: relative;
+    width: 100%;
+    height: 2px; /* Fixed height for the tracking row container */
+    background: linear-gradient(90deg, rgba(155, 92, 255, 0.1) 0%, rgba(155, 92, 255, 0.6) 50%, rgba(155, 92, 255, 0.1) 100%);
+    margin: 80px 0; /* Ensures ample spacing above and below the horizontal vector */
+}
+
+.horizontal-timeline-items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+}
+
+.horizontal-timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Detaching the interactive circle targets to anchor PERFECTLY on the horizontal axis line */
+.timeline-interactive-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Locks exactly to center zero-point */
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #020205;
+    border: 2px solid rgba(155, 92, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.inner-glowing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #9B5CFF;
+    opacity: 0; 
+    transform: scale(0.4);
+    transition: all 0.3s ease;
+}
+
+/* Absolute offset systems pulling content arrays completely away from text collision zones */
+.timeline-content-block {
+    position: absolute;
+    width: 180px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Above items layout */
+.top-node .timeline-content-block {
+    bottom: 24px; /* Perfectly structured above the axis */
+}
+
+/* Below items layout */
+.bottom-node .timeline-content-block {
+    top: 24px; /* Perfectly structured below the axis */
+}
+
+.timeline-date {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.timeline-item-title {
+    color: #94a3b8; 
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+}
+
+.timeline-item-desc {
+    color: #475569;
+    font-size: 11px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+/* Combined Sync Hover States */
+.horizontal-timeline-item:hover .timeline-interactive-dot {
+    border-color: #9B5CFF;
+    box-shadow: 0 0 14px rgba(155, 92, 255, 0.8);
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.horizontal-timeline-item:hover .inner-glowing-dot {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.horizontal-timeline-item:hover .timeline-item-title,
+.horizontal-timeline-item:hover .timeline-date {
+    color: #ffffff; 
+}
+
+.horizontal-timeline-item:hover .timeline-item-desc {
+    color: #94a3b8;
+}
+
+/* =========================================
+   RESPONSIVENESS RESPONSIVE ADJUSTMENTS
+========================================= */
+@media (max-width: 1200px) {
+    .horizontal-timeline-container {
+        overflow-x: auto;
+        height: auto;
+        background: transparent;
+        margin: 40px 0;
+    }
+    .horizontal-timeline-items {
+        position: relative;
+        width: 1200px;
+        height: 320px;
+    }
+    .timeline-section-title {
+        margin-bottom: 40px;
+    }
+    /* Add horizontal axis line back inside responsive overflow layout box */
+    .horizontal-timeline-items::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: rgba(155, 92, 255, 0.4);
+        z-index: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .about-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+    }
+    
+    .about-left {
+        width: 100%;
+        max-width: 480px;
+    }
+    
+    .about-right {
+        width: 100%;
+    }
+    
+    .about-cards-carousel {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 80px 4% 60px 4%;
+    }
+    
+    .about-illustration {
+        height: 380px;
+    }
+    
+    .skills-track {
+        gap: 12px;
+    }
+    
+    .skill-icon-card {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+/* ==========================================================================
+   9. SCROLL-IN ENTRANCE ANIMATIONS
+   ========================================================================== */
+
+/* Define initial states for top items (invisible and slightly pushed down) */
+.about-left,
+.about-tag,
+.about-title,
+.about-description,
+.about-cards-carousel {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.5s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+/* Specific starting point for background waves */
+.about-bg-waves {
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+/* === Trigger States for Top Content === */
+.about.active .about-bg-waves { opacity: 1.0; }
+.about.active .about-left { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+.about.active .about-tag { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.about.active .about-title { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+.about.active .about-description { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+.about.active .about-cards-carousel { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+
+
+/* === NEW: Independent Timeline Scroll Target Setup === */
+
+/* Initial hidden state for the timeline */
+.about-horizontal-timeline-wrapper {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+/* Triggered only when the timeline container itself crosses into the viewport */
+.about-horizontal-timeline-wrapper.timeline-active {
+    opacity: 1;
+    transform: translateY(0);
+}

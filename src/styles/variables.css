@@ -1,0 +1,43 @@
+:root{
+
+    /* ===== COLORS ===== */
+
+    --bg:#06070d;
+    --bg-secondary:#0d1018;
+
+    --primary:#9B5CFF;
+    --secondary:#6E42F5;
+
+    --text:#ffffff;
+    --text-light:#b4b4c7;
+    --border:#26293a;
+
+    --glass:rgba(255,255,255,0.03);
+
+    --shadow:0 0 40px rgba(155,92,255,.20);
+
+    --gradient:linear-gradient(
+        135deg,
+        #6E42F5,
+        #B56DFF
+    );
+
+
+
+    /* ===== FONTS ===== */
+
+    --heading:'Poppins',sans-serif;
+
+    --body:'Inter',sans-serif;
+
+
+
+    /* ===== SPACING ===== */
+
+    --container:1400px;
+
+    --radius:18px;
+
+    --transition:.35s ease;
+
+}

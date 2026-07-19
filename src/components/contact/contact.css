@@ -1,0 +1,371 @@
+/* ============================================================
+   GLOBAL DESIGN THEME VARS
+   ============================================================ */
+:root {
+  --bg-dark: #080a0f;
+  --panel-bg: rgba(13, 16, 24, 0.75);
+  --purple-accent: #9B5CFF;
+  --bright-accent: #A855F7;
+  --gray-text: #94a3b8;
+  --white-text: #f8fafc;
+}
+
+/* Base Layout Section Container */
+.contact-section {
+  position: relative;
+  overflow: hidden; /* Clips anything extending outside the screen */
+  width: 100%;
+  padding: 80px 4%;
+  background-color: var(--bg-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 2; 
+}
+
+/* ============================================================
+   BACKGROUND SEA WAVES (Fixed gaps & unified colors)
+   ============================================================ */
+.wave-background-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Sits behind foreground text cards */
+  pointer-events: none;
+}
+
+.wave-background-container svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 280px;
+  
+  /* FIX: scale(1.15) over-stretches the svg slightly so animations never leave side gaps! */
+  transform: scale(1.15); 
+  transform-origin: bottom center;
+}
+
+/* Wave 1: Pure purple at a very soft transparency */
+.wave-shade-dark {
+  fill: var(--purple-accent);
+  opacity: 0.12;
+  animation: waveSwayLeft 15s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+/* Wave 2: Pure purple at a slightly brighter transparency */
+.wave-shade-light {
+  fill: var(--purple-accent);
+  opacity: 0.19;
+  animation: waveSwayRight 10s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+/* Responsive Wave Movement Keyframes */
+@keyframes waveSwayLeft {
+  0% { transform: translateX(-3%) translateY(5px); }
+  100% { transform: translateX(3%) translateY(-5px); }
+}
+
+@keyframes waveSwayRight {
+  0% { transform: translateX(2%) translateY(-3px); }
+  100% { transform: translateX(-2%) translateY(5px); }
+}
+
+
+/* ============================================================
+   FOREGROUND MAIN GRIDS 
+   ============================================================ */
+.contact-container {
+  position: relative;
+  z-index: 2; /* Forces content on top of waves */
+  width: 100%;
+  max-width: 1140px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+/* LEFT SIDE PANEL INFO */
+.subtitle-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.subtitle-text {
+  color: var(--purple-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.subtitle-line {
+  width: 30px;
+  height: 2px;
+  background-color: var(--purple-accent);
+}
+
+.main-title {
+  color: var(--white-text);
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0 0 16px 0;
+}
+
+.purple-text {
+  color: var(--purple-accent);
+}
+
+.section-description {
+  color: var(--gray-text);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  max-width: 420px;
+}
+
+.section-divider {
+  width: 25px;
+  height: 2px;
+  background-color: rgba(148, 163, 184, 0.2);
+  margin-bottom: 25px;
+}
+
+/* VERTICAL LIST DESIGN */
+.social-links-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.social-header-label {
+  color: var(--gray-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin: 0;
+}
+
+.social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 380px;
+}
+
+.social-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: rgba(13, 16, 24, 0.4);
+  border: 1px solid rgba(155, 92, 255, 0.12);
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.icon-container {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(155, 92, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white-text);
+  margin-right: 14px;
+}
+
+.social-name {
+  color: var(--gray-text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* List Item Interactive States */
+.social-item:hover {
+  border-color: rgba(155, 92, 255, 0.4);
+  background: rgba(155, 92, 255, 0.03);
+  transform: translateX(4px);
+}
+
+.social-item:hover .icon-container {
+  background: var(--purple-accent);
+  box-shadow: 0 0 10px rgba(155, 92, 255, 0.4);
+}
+
+.social-item:hover .social-name {
+  color: var(--white-text);
+}
+
+
+/* ============================================================
+   RIGHT SIDE COMPACT FORM DESIGN
+   ============================================================ */
+.contact-form-card {
+  background: var(--panel-bg);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.form-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.title-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-text h4 {
+  color: var(--white-text);
+  font-size: 18px;
+  margin: 0 0 2px 0;
+}
+
+.title-text p {
+  color: var(--gray-text);
+  font-size: 13px;
+  margin: 0;
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inner-field-icon {
+  position: absolute;
+  left: 16px;
+  color: rgba(148, 163, 184, 0.3);
+}
+
+.text-area-icon {
+  top: 14px;
+}
+
+/* Inputs styling nodes */
+.input-box input, 
+.input-box textarea {
+  width: 100%;
+  background: rgba(5, 7, 12, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 13px 14px 13px 44px;
+  border-radius: 10px;
+  color: var(--white-text);
+  font-size: 14.5px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.input-box input:focus, 
+.input-box textarea:focus {
+  border-color: var(--bright-accent);
+  background: rgba(5, 7, 12, 0.6);
+}
+
+/* Compact text field container setting */
+.message-height textarea {
+  min-height: 100px;
+  resize: none;
+  font-family: inherit;
+}
+
+/* Submit Control Interaction Trigger */
+.submit-button {
+  background: linear-gradient(135deg, var(--purple-accent), #7c3aed);
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  color: var(--white-text);
+  font-weight: 700;
+  font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+  box-shadow: 0 6px 20px rgba(155, 92, 255, 0.35);
+}
+
+.privacy-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 11.5px;
+}
+
+/* MOBILE MEDIA SCALING SCREEN */
+@media (max-width: 880px) {
+  .contact-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* ==========================================================================
+   SCROLL-IN ENTRANCE ANIMATIONS (CONTACT VIEWPORT STAGING)
+   ========================================================================== */
+
+/* 1. Stage both primary columns with initial translated and invisible states */
+.contact-left-side,
+.contact-form-card {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1.3s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                transform 1.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+/* 2. Entrance active rules: Smoothly slide up columns upon intersection trigger */
+.contact-section.contact-active .contact-left-side {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s; /* Left info fades up first */
+}
+
+.contact-section.contact-active .contact-form-card {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.5s; /* Right form surfaces slightly after */
+}
+

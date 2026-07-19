@@ -1,0 +1,651 @@
+/* ==========================================================================
+   1. MAIN HERO BOX SETUP
+   ========================================================================== */
+
+/* Fullscreen section container that hosts all visual components */
+.hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end; /* Aligns contents to the baseline row */
+    justify-content: center;
+    padding: 60px 6% 80px 6%;
+    background: #020205; /* Deep dark cosmic background color */
+    font-family: system-ui, -apple-system, sans-serif;
+    z-index: 1;
+}
+
+/* Layer container isolating background elements from layout contents */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Allows user to click items straight through background layers */
+    z-index: 1;
+}
+
+/* Canvas drawing zone for floating geometric particles */
+#bg-decorations-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    z-index: 1;
+}
+
+
+/* ==========================================================================
+   2. BACKGROUND BIG TYPOGRAPHY ("ARYAN SHIRKE")
+   ========================================================================== */
+
+/* Wrapper positioning the massive text block into upper layout track */
+.hero-bg-text-wrapper {
+    position: absolute;
+    top: 15%; 
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+    user-select: none; /* Prevents text selection highlight artifacts when dragging */
+    overflow: visible;
+    z-index: 2;
+}
+
+/* Styled text displaying hollow/outlined lettering typography properties */
+.outline-text-plain {
+    font-family: 'Montserrat', 'Arial Black', sans-serif;
+    font-weight: 900;
+    font-size: 10.0vw; /* Scales text fluidly relative to viewport window widths */
+    font-stretch: ultra-condensed;
+    letter-spacing: -0.04em; 
+    line-height: 0.8;
+    word-spacing: 8rem; /* Sets distinct wide gaps between first and last names */
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    color: #020205; /* Fills text with background color to remain hollow */
+    -webkit-text-stroke: 1.1px #723ec7; /* Gives the text its purple contour border outline */
+    paint-order: stroke fill;
+}
+
+
+/* ==========================================================================
+   3. HORIZONTAL CONTENT GRID ROW
+   ========================================================================== */
+
+/* Main layout row holding the Left Panel, Center Graphic, and Right Panel */
+.hero-container {
+    width: 100%;
+    max-width: 1560px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Standardizes bottom alignment across elements */
+    position: relative;
+    z-index: 10;
+    gap: 30px;
+}
+
+
+/* ==========================================================================
+   4. LEFT CONTENT PANEL (Intro, Titles, and Buttons)
+   ========================================================================== */
+
+.hero-left {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 5px;
+    max-width: 450px;
+}
+
+/* Small tag introductory label reading "HELLO, I'M" */
+.hero-tag {
+    color: #9B5CFF;
+    font-size: 15px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    width: fit-content;
+}
+
+.tag-line {
+    font-weight: 900;
+    opacity: 0.8;
+}
+
+/* Primary heading tag layout rules */
+.hero-title {
+    font-size: clamp(48px, 4.8vw, 72px); /* Caps text fluidly between 48px and 72px */
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+}
+
+.title-white { 
+    color: #ffffff; 
+}
+
+/* Gives the last name its signature neon purple-to-pink color shade */
+.title-gradient-purple {
+    background: linear-gradient(135deg, #9B5CFF 30%, #E373FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Sub-header detailing professional roles */
+.hero-role {
+    color: #cbd5e1;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+/* Accent decorative color bar separating title nodes from details paragraph */
+.role-divider-line {
+    width: 32px;
+    height: 2.5px;
+    background: #9B5CFF;
+    margin-bottom: 28px;
+    border-radius: 2px;
+}
+
+/* Paragraph summary biography statement */
+.hero-description {
+    color: #64748b;
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 400px;
+    margin-bottom: 40px;
+}
+
+/* Action button grouping layout wrapper */
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+/* Solid neon gradient action call button */
+.primary-btn {
+    padding: 15px 32px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #9B5CFF 50%, #E373FF 100%);
+    color: white;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.primary-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(124, 58, 237, 0.5);
+}
+
+/* Hollow bordered secondary auxiliary action button */
+.secondary-btn {
+    padding: 15px 32px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1.5px solid #9B5CFF;
+    color: #9B5CFF;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background: #9B5CFF;
+    color: #fff;
+}
+
+
+/* ==========================================================================
+   5. CENTER PORTRAIT ELEMENT STAGING
+   ========================================================================== */
+
+.hero-center {
+    flex: 1.4; /* Increased flex to give it more horizontal space to grow */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; 
+    max-width: 520px; /* Increased maximum width to allow a larger image size */
+    position: relative;
+    height: 100%;
+    
+    /* Shifts the entire container left to perfectly fill the empty core gap */
+    transform: translateX(-20px); 
+}
+
+.hero-portrait {
+    width: 100%;
+    height: 750px; /* Reduced height from 700px to physically push the portrait down */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    
+    /* 1. BRING IMAGE DOWN FURTHER: Move the entire element down vertically */
+    transform: translateY(40px); 
+
+    /* 2. THE BLEND: This strips away the dark box background surrounding your head,
+       making the giant letters visible behind your hair while keeping your face completely solid. */
+    mix-blend-mode: screen; 
+    
+    /* 3. GRADIENT MASK: Dissolves the very edges cleanly so the image transitions smoothly */
+    -webkit-mask-image: linear-gradient(to bottom, 
+                            rgba(0,0,0,0) 0%, 
+                            rgba(0,0,0,1) 25%, 
+                            rgba(0,0,0,1) 85%, 
+                            rgba(0,0,0,0) 100%),
+                        linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, 
+                            rgba(0,0,0,0) 0%, 
+                            rgba(0,0,0,1) 25%, 
+                            rgba(0,0,0,1) 85%, 
+                            rgba(0,0,0,0) 100%),
+                linear-gradient(to right, transparent 0%, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    
+    filter: drop-shadow(0 0 40px rgba(155, 92, 255, 0.2));
+}
+
+.portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Pushes your head lower inside the image box crop frame */
+    object-position: center top; 
+    display: block;
+    pointer-events: none;
+}
+
+/* Handles layout fitting coordinates for canvas scripts embedded into the center frame */
+.hero-portrait canvas {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   6. RIGHT PANEL - DEVELOPER SPECIFICATION CARD
+   ========================================================================== */
+
+/* Structural container positioning the card card within the main row */
+.hero-right {
+    flex: 1.1;
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 20px;
+    max-width: 450px;
+    
+    /* Direct position offset shifts card down from overlap lines */
+    transform: translateY(60px); 
+}
+
+/* Floating interactive dashboard information pane styling properties */
+.developer-card {
+    width: 330px;
+    padding: 24px 22px;
+    border-radius: 16px;
+    background: rgba(10, 10, 18, 0.82); /* Semitransparent slate backdrop layer */
+    border: 1px solid rgba(155, 92, 255, 0.22);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.85);
+    transform-style: preserve-3d; /* Enforces clean 3D perspective depth tracks during mouse events */
+    will-change: transform;
+    transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+}
+
+.developer-card:hover {
+    box-shadow: 0 20px 50px rgba(155, 92, 255, 0.28), 0 0 30px rgba(99, 102, 241, 0.18);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 2px;
+}
+
+.developer-card h3 {
+    color: #9B5CFF;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.header-icon-code {
+    color: #9B5CFF;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.card-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Individual list entries describing competencies */
+.card-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 2px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03); /* Soft separating border rule lines */
+}
+
+/* Keeps upper row free of unnecessary double borders */
+.card-item:first-child {
+    border-top: none;
+}
+
+/* Circular glowing emblem wrapper housing asset SVGs */
+.icon-wrapper {
+    width: 40px;
+    height: 40px;
+    background: rgba(155, 92, 255, 0.08);
+    border: 1px solid rgba(155, 92, 255, 0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.custom-svg-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+.card-item h4 {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 3px 0;
+}
+
+.card-item p {
+    color: #64748b;
+    font-size: 12px;
+    margin: 0;
+}
+
+
+/* ==========================================================================
+   7. INTERACTIVE FOOTER SCROLL INDICATOR
+   ========================================================================== */
+
+/* Centered footer hint prompting navigation triggers */
+.scroll-indicator {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 15;
+}
+
+.scroll-indicator span {
+    color: #475569;
+    font-size: 10px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+/* Outline bounding element mimicking mouse hardware dimensions */
+.mouse {
+    width: 22px;
+    height: 36px;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Micro-wheel asset pulsing inside mouse outline shell */
+.wheel {
+    width: 3px;
+    height: 7px;
+    border-radius: 10px;
+    background: #9B5CFF;
+    margin-top: 6px;
+    animation: scrollAnimation 1.6s infinite ease-in-out;
+}
+
+/* Loop animating mouse wheel travel motions */
+@keyframes scrollAnimation {
+    0%   { transform: translateY(0);   opacity: 1;   }
+    50%  { transform: translateY(6px); opacity: 0.3; }
+    100% { transform: translateY(0);   opacity: 1;   }
+}
+
+
+/* ==========================================================================
+   8. RESPONSIVE DESIGN VIEWPORT MEDIA OVERRIDES
+   ========================================================================== */
+
+/* Medium Devices & Tablets Breakpoint (Stack columns vertically) */
+@media (max-width: 1024px) {
+    .hero {
+        height: auto;
+    }
+
+    /* Transmute layout format from standard row viewports to flat column layouts */
+    .hero-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        padding-bottom: 40px;
+        padding-top: 40px;
+    }
+    
+    /* Equalizes uniform element behavior bounds across modular sections */
+    .hero-left, .hero-center, .hero-right {
+        flex: none;
+        width: 100%;
+        max-width: 500px;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    /* Configures chronological layout orders */
+    .hero-left {
+        order: 1;
+    }
+    
+    .hero-center {
+        order: 2;
+        height: 480px;
+    }
+    
+    .hero-right {
+        order: 3;
+        padding-top: 0;
+        transform: translateY(0); /* Normalizes card displacement offset on shared vertical views */
+    }
+    
+    .hero-title {
+        text-align: center;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    .developer-card {
+        margin: 0 auto;
+    }
+    
+    .role-divider-line {
+        margin: 0 auto 28px auto;
+    }
+}
+
+/* Compact Smartphones Breakpoint */
+@media (max-width: 768px) {
+    .hero {
+        padding: 0 4% 50px 4%;
+    }
+    
+    .hero-center {
+        height: 400px;
+    }
+    
+    .hero-portrait {
+        height: 400px;
+        max-width: 320px;
+    }
+    
+    /* Shrinks huge background text lines cleanly on miniature viewport fields */
+    .outline-text-plain {
+        font-size: 14vw;
+        letter-spacing: -0.02em;
+    }
+}
+
+    /* Compact Smartphones Breakpoint */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 0 4% 50px 4%;
+        }
+        
+        .hero-center {
+            height: 400px;
+        }
+        
+        .hero-portrait {
+            height: 400px;
+            max-width: 320px;
+        }
+        
+        /* Shrinks huge background text lines cleanly on miniature viewport fields */
+        .outline-text-plain {
+            font-size: 14vw;
+            letter-spacing: -0.02em;
+        }
+    }
+
+
+    /* ==========================================================================
+   9. ENTRANCE FADE-IN ANIMATIONS
+   ========================================================================== */
+
+/* The Core Fade-In Animation */
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Base fade-in for the canvas (no movement, just opacity) */
+@keyframes canvasFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* A specialized version for the portrait to prevent layout shifting */
+@keyframes portraitFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(40px) scale(1);
+    }
+}
+
+/* Base class rule to handle initial state before animation kicks in */
+.hero-left > *,
+.portrait-img,
+.card-animation-wrapper,
+.outline-text-plain,
+.scroll-indicator,
+#bg-decorations-canvas {
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+    opacity: 0; /* Keeps elements hidden until animation begins */
+}
+
+/* 1. Background Elements (Canvas squares & Big Text fade in first) */
+#bg-decorations-canvas {
+    animation-name: canvasFadeIn;
+    animation-delay: 1s;
+    animation-duration: 2s;
+}
+
+.outline-text-plain {
+    animation-name: heroFadeIn;
+    animation-delay: 0.3s;
+}
+
+/* 2. Left Column Text & Buttons (Staggered cascade) */
+.hero-tag { animation-name: heroFadeIn; animation-delay: 0.2s; }
+.hero-title { animation-name: heroFadeIn; animation-delay: 0.3s; }
+.hero-role { animation-name: heroFadeIn; animation-delay: 0.4s; }
+.role-divider-line { animation-name: heroFadeIn; animation-delay: 0.45s; }
+.hero-description { animation-name: heroFadeIn; animation-delay: 0.5s; }
+.hero-buttons { animation-name: heroFadeIn; animation-delay: 0.6s; }
+
+/* 3. Center Portrait Image (Matches its unique layout transform) */
+.portrait-img {
+    animation-name: portraitFadeIn;
+    animation-delay: 0.6s;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* 4. Right Column Developer Card WRAPPER (Now separates animation from 3D Tilt) */
+.card-animation-wrapper {
+    animation-name: heroFadeIn;
+    animation-delay: 0.8s;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 5. Scroll Indicator Footer */
+.scroll-indicator {
+    animation-name: heroFadeIn;
+    animation-delay: 0.8s;
+}
