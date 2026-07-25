@@ -230,7 +230,7 @@ background: radial-gradient(
 
 /* Base states are dark grey / muted */
 .project-badge-id {
-    color: #584b73; 
+    color: #4d4164; 
     font-weight: 700;
     font-size: 15px;
     margin-bottom: 6px;
@@ -239,14 +239,14 @@ background: radial-gradient(
 }
 .project-title {
     font-size: 34px;
-    color: #94a3b8; 
+    color: #616d7d; 
     font-weight: 700;
     margin: 0 0 16px 0;
     line-height: 1.2;
     transition: color 0.3s ease;
 }
 .project-short-info {
-    color: #64748b; 
+    color: #546072; 
     font-size: 15px;
     line-height: 1.6;
     margin: 0 0 26px 0;
@@ -311,9 +311,9 @@ background: radial-gradient(
 
 /* === ACTIVATE HIGH-CONTRAST ILLUMINATION ON HOVER === */
 .project-card.active-card:hover .project-badge-id { color: #9B5CFF; }
-.project-card.active-card:hover .project-title { color: #ffffffcb; }
+.project-card.active-card:hover .project-title { color: #ffffffd3; }
 .project-card.active-card:hover .project-short-info { color: #cbd5e1cd; }
-.project-card.active-card:hover .btn-github-link { color: #ffffffc9; }
+.project-card.active-card:hover .btn-github-link { color: #ffffffd1; }
 
 .project-card.active-card:hover .tool-tag {
     background: rgba(34, 211, 238, 0.08);

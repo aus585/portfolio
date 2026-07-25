@@ -229,24 +229,24 @@
     display: flex;
     justify-content: center;
     align-items: flex-end; 
-    max-width: 520px; /* Increased maximum width to allow a larger image size */
+    max-width: 700px; /* Increased maximum width to allow a larger image size */
     position: relative;
     height: 100%;
     
     /* Shifts the entire container left to perfectly fill the empty core gap */
-    transform: translateX(-20px); 
+    transform: translateX(-0px); 
 }
 
 .hero-portrait {
     width: 100%;
-    height: 750px; /* Reduced height from 700px to physically push the portrait down */
+    height: 860px; /* Reduced height from 700px to physically push the portrait down */
     position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     
     /* 1. BRING IMAGE DOWN FURTHER: Move the entire element down vertically */
-    transform: translateY(40px); 
+    transform: translateY(90px); 
 
     /* 2. THE BLEND: This strips away the dark box background surrounding your head,
        making the giant letters visible behind your hair while keeping your face completely solid. */
@@ -410,7 +410,7 @@
 /* Centered footer hint prompting navigation triggers */
 .scroll-indicator {
     position: absolute;
-    bottom: 25px;
+    bottom: -25px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -421,7 +421,7 @@
 }
 
 .scroll-indicator span {
-    color: #475569;
+    color: #dbdfe3bc;
     font-size: 10px;
     letter-spacing: 3px;
     font-weight: 700;
@@ -431,7 +431,7 @@
 .mouse {
     width: 22px;
     height: 36px;
-    border: 2px solid rgba(255, 255, 255, 0.12);
+    border: 2px solid #ffffffb1;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -442,7 +442,7 @@
     width: 3px;
     height: 7px;
     border-radius: 10px;
-    background: #9B5CFF;
+    background: #9f6bf3;
     margin-top: 6px;
     animation: scrollAnimation 1.6s infinite ease-in-out;
 }

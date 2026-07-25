@@ -316,6 +316,12 @@ ICONS
     transition:transform .35s ease;
 }
 
-.resume-btn:hover .btn-icon{
-    transform:translateY(2px);
+.resume-btn {
+    display: flex;                /* Make sure display flex is here if you're using alignment */
+    align-items: center;          /* Move this inside */
+    justify-content: space-between; /* Move this inside */
+}
+
+.resume-btn:hover .btn-icon {
+    transform: translateY(2px);
 }

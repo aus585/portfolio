@@ -41,7 +41,7 @@ export function Navbar() {
 
           <div class="divider"></div>
 
-          <a href="./assets/your-resume.pdf" download="Aryan_Shirke_Resume.pdf" class="resume-btn" style="text-decoration: none;">
+          <a href="/photo/resume.pdf" download="Aryan_Shirke_Resume.pdf" class="resume-btn" style="text-decoration: none;">
             <span>RESUME</span>
             <svg
               class="btn-icon"

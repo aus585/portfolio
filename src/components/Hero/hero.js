@@ -27,9 +27,9 @@ export function Hero() {
         Passionate about designing intuitive digital experiences through creativity, technology, and continuous learning.
       </p>
       <div class="hero-buttons">
-        <button class="primary-btn">VIEW PROJECTS</button>
-        <button class="secondary-btn">EXPLORE MORE</button>
-      </div>
+  <a href="#projects" class="primary-btn">VIEW PROJECTS</a>
+  <a href="#about" class="secondary-btn">EXPLORE MORE</a>
+</div>
     </div>
 
     <div class="hero-center">
@@ -133,6 +133,24 @@ function initHeroEffects() {
   const card = document.getElementById("interactive-dev-card");
   const bgCanvas = document.getElementById("bg-decorations-canvas");
   const heroSection = document.getElementById("home");
+
+  // === NEW SMOOTH SCROLL LOGIC ADDED HERE ===
+  const heroButtons = document.querySelectorAll(".hero-buttons a");
+  heroButtons.forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = button.getAttribute("href");
+      const targetSection = document.querySelector(targetId);
+      
+      if (targetSection) {
+        targetSection.scrollIntoView({ 
+          behavior: "smooth", 
+          block: "start" 
+        });
+      }
+    });
+  });
+  // ==========================================
 
   // 1. Interactive 3D Card Effect
   if (card) {

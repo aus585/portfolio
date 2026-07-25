@@ -9,17 +9,19 @@ export function initPortrait() {
 
     const imagePath = "/photo/art.png";
 
-    const tileSize = 0.68;             
-    const tileGap = 0.04;              
+    // 1. Tighter tile arrangement configurations (Reduced gaps)
+    const tileSize = 0.72;             
+    const tileGap = 0.02; // Reduced gap from 0.04 so tiles blend closer together
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 2000);
-    camera.position.z = 300;          
+    
+    // 2. ZOOM IN CLOSER: Brought camera from 300 down to 215 to scale up the portrait size
+    camera.position.z = 275;          
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
     
-    // COLOR MATCH FIX 1: Tell the renderer to output mathematically exact color spaces
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     
     const mouse = new THREE.Vector2(-9999, -9999);
@@ -30,12 +32,10 @@ export function initPortrait() {
     let tilesData = [];
     const dummy = new THREE.Object3D();
     
-    // COLOR MATCH FIX 2: Enable standard working color management maps for individual tile instances
     const colorParsers = new THREE.Color();
 
     const loader = new THREE.TextureLoader();
     loader.load(imagePath, (texture) => {
-        // COLOR MATCH FIX 3: Force the image loader to parse exact sRGB color profiles from the source image
         texture.colorSpace = THREE.SRGBColorSpace;
         
         const img = texture.image;
@@ -92,40 +92,37 @@ export function initPortrait() {
 
         instancedMesh = new THREE.InstancedMesh(geometry, material, validTiles.length);
         
-        // Inside the loader.load(imagePath, (texture) => { ... }) loop:
+        validTiles.forEach((tile, index) => {
+            const posX = offsetX + tile.x * (tileSize + tileGap);
+            const posY = offsetY - tile.y * (tileSize + tileGap);
+            
+            const spawnAngle = Math.random() * Math.PI * 2;
+            const spawnDistance = 160 + Math.random() * 80; 
+            
+            const spawnX = posX + Math.cos(spawnAngle) * spawnDistance;
+            const spawnY = posY + Math.sin(spawnAngle) * spawnDistance;
+            const spawnZ = (Math.random() - 0.5) * 60; 
 
-validTiles.forEach((tile, index) => {
-    const posX = offsetX + tile.x * (tileSize + tileGap);
-    const posY = offsetY - tile.y * (tileSize + tileGap);
-    
-    const spawnAngle = Math.random() * Math.PI * 2;
-    const spawnDistance = 160 + Math.random() * 80; 
-    
-    const spawnX = posX + Math.cos(spawnAngle) * spawnDistance;
-    const spawnY = posY + Math.sin(spawnAngle) * spawnDistance;
-    const spawnZ = (Math.random() - 0.5) * 60; 
+            tilesData.push({
+                baseX: posX,
+                baseY: posY,
+                baseZ: 0,
+                currentX: spawnX,
+                currentY: spawnY,
+                currentZ: spawnZ,
+                scale: 0.0, 
+                delay: Math.sqrt(tile.x * tile.x + tile.y * tile.y) * 0.25 + (Math.random() * 15), 
+                isAssembled: false
+            });
 
-    tilesData.push({
-        baseX: posX,
-        baseY: posY,
-        baseZ: 0,
-        currentX: spawnX,
-        currentY: spawnY,
-        currentZ: spawnZ,
-        scale: 0.0, 
-        // 🛠️ SLOW DOWN 1: Increased delay multiplier (0.08 -> 0.25) so it unfurls sequentially
-        delay: Math.sqrt(tile.x * tile.x + tile.y * tile.y) * 0.25 + (Math.random() * 15), 
-        isAssembled: false
-    });
+            dummy.position.set(spawnX, spawnY, spawnZ);
+            dummy.scale.set(0, 0, 1);
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(index, dummy.matrix);
 
-    dummy.position.set(spawnX, spawnY, spawnZ);
-    dummy.scale.set(0, 0, 1);
-    dummy.updateMatrix();
-    instancedMesh.setMatrixAt(index, dummy.matrix);
-
-    colorParsers.setRGB(tile.r / 255, tile.g / 255, tile.b / 255, THREE.SRGBColorSpace);
-    instancedMesh.setColorAt(index, colorParsers);
-});
+            colorParsers.setRGB(tile.r / 255, tile.g / 255, tile.b / 255, THREE.SRGBColorSpace);
+            instancedMesh.setColorAt(index, colorParsers);
+        });
 
         instancedMesh.instanceMatrix.needsUpdate = true;
         if (instancedMesh.instanceColor) instancedMesh.instanceColor.needsUpdate = true;
@@ -153,34 +150,30 @@ validTiles.forEach((tile, index) => {
         for (let i = 0; i < tilesData.length; i++) {
             const data = tilesData[i];
 
-           // Inside the animate() function loop:
+            if (!data.isAssembled) {
+                if (frameCount > data.delay) {
+                    data.currentX += (data.baseX - data.currentX) * 0.04;
+                    data.currentY += (data.baseY - data.currentY) * 0.04;
+                    data.currentZ += (data.baseZ - data.currentZ) * 0.04;
+                    
+                    if (data.scale < 1.0) data.scale += 0.04;
 
-if (!data.isAssembled) {
-    if (frameCount > data.delay) {
-        // 🛠️ SLOW DOWN 2: Dropped velocity coefficient (0.12 -> 0.04) for a cinematic glide
-        data.currentX += (data.baseX - data.currentX) * 0.04;
-        data.currentY += (data.baseY - data.currentY) * 0.04;
-        data.currentZ += (data.baseZ - data.currentZ) * 0.04;
-        
-        if (data.scale < 1.0) data.scale += 0.04; // Slow down scale arrival too
+                    dummy.position.set(data.currentX, data.currentY, data.currentZ);
+                    dummy.scale.set(data.scale, data.scale, 1);
 
-        dummy.position.set(data.currentX, data.currentY, data.currentZ);
-        dummy.scale.set(data.scale, data.scale, 1);
-
-        // Keep target snap thresholds tight
-        if (Math.abs(data.currentX - data.baseX) < 0.08 && 
-            Math.abs(data.currentY - data.baseY) < 0.08) {
-            data.currentX = data.baseX;
-            data.currentY = data.baseY;
-            data.currentZ = data.baseZ;
-            data.scale = 1.0;
-            data.isAssembled = true;
-        }
-    } else {
-        dummy.position.set(data.currentX, data.currentY, data.currentZ);
-        dummy.scale.set(0, 0, 1);
-    }
-} 
+                    if (Math.abs(data.currentX - data.baseX) < 0.08 && 
+                        Math.abs(data.currentY - data.baseY) < 0.08) {
+                        data.currentX = data.baseX;
+                        data.currentY = data.baseY;
+                        data.currentZ = data.baseZ;
+                        data.scale = 1.0;
+                        data.isAssembled = true;
+                    }
+                } else {
+                    dummy.position.set(data.currentX, data.currentY, data.currentZ);
+                    dummy.scale.set(0, 0, 1);
+                }
+            } 
             else {
                 let targetZ = data.baseZ;
                 let currentScale = 1.0;
