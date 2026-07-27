@@ -186,22 +186,22 @@ const json = JSON.stringify(object);
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
 
-            <div id="form-result" style="margin-top: 15px; font-weight: 500; text-align: center; font-size: 14px; min-height: 20px;"></div>
+           <div id="form-result" style="margin-top: 15px; font-weight: 500; text-align: center; font-size: 14px; min-height: 20px;"></div>
           </form>
 
           <div class="privacy-footer">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <span>Your information will never be shared.</span>
           </div>
-
-          <!-- ADDED COPYRIGHT LINE -->
-          <div class="copyright-footer">
-            <span>&copy; ${new Date().getFullYear()} Aryan Shirke. All rights reserved.</span>
-          </div>
-
         </div>
 
+      </div> <!-- End of .contact-container -->
+
+      <!-- NEW: COPYRIGHT LINE PLACED AT THE VERY BOTTOM -->
+      <div class="section-copyright">
+        <span>&copy; ${new Date().getFullYear()} Aryan Shirke. All rights reserved.</span>
       </div>
+
     </section>
   `;
 }
