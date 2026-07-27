@@ -368,4 +368,16 @@
     transform: translateY(0);
     transition-delay: 0.5s; /* Right form surfaces slightly after */
 }
+/* ==========================================================================
+   COPYRIGHT
+   ========================================================================== */
+.copyright-footer {
+  text-align: center;
+  margin-top: 15px;
+  color: rgba(148, 163, 184, 0.4);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  padding-top: 12px;
+}
 
